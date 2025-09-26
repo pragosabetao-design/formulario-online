@@ -1,24 +1,27 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Formulário</title>
-</head>
-<body>
-  <h2>Formulário de Contato</h2>
-  <form id="meuForm">
-    <label>Nome:</label><br>
-    <input type="text" name="nome" required><br><br>
+<script>
+  const form = document.getElementById('meuForm');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-    <label>Email:</label><br>
-    <input type="email" name="email" required><br><br>
+    const dados = {
+      nome: form.nome.value,
+      email: form.email.value,
+      mensagem: form.mensagem.value
+    };
 
-    <label>Mensagem:</label><br>
-    <textarea name="mensagem" required></textarea><br><br>
+    const url = "https://script.google.com/macros/s/AKfycbxYbY26No-4H_ooUtjH0iubGfD5ouVXjPF87r8K5yv9Fm6MN8TbP_xWeg1vjCD7Cy8z0w/exec"; // URL do Apps Script
 
-    <button type="submit">Enviar</button>
-  </form>
-</body>
-</html>
+    const response = await fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(dados)
+    });
+
+    const result = await response.json();
+    alert("Enviado com sucesso!");
+    form.reset();
+  });
+</script>
+
+
 
 
