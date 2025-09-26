@@ -1,7 +1,8 @@
 <script>
   const form = document.getElementById('meuForm');
+
   form.addEventListener('submit', async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // evita recarregar a página
 
     const dados = {
       nome: form.nome.value,
@@ -9,19 +10,27 @@
       mensagem: form.mensagem.value
     };
 
-    const url = "https://script.google.com/macros/s/AKfycbxYbY26No-4H_ooUtjH0iubGfD5ouVXjPF87r8K5yv9Fm6MN8TbP_xWeg1vjCD7Cy8z0w/exec"; // URL do Apps Script
+    const url = "COLE_AQUI_A_URL_DO_SEU_SCRIPT"; // Apps Script
 
-    const response = await fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(dados)
-    });
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(dados),
+      });
 
-    const result = await response.json();
-    alert("Enviado com sucesso!");
-    form.reset();
+      const result = await response.json();
+
+      if (result.status === "sucesso") {
+        alert("Formulário enviado com sucesso!");
+        form.reset();
+      } else {
+        alert("Erro ao enviar formulário.");
+      }
+
+    } catch (error) {
+      console.error(error);
+      alert("Erro na conexão com o servidor.");
+    }
   });
 </script>
-
-
-
 
